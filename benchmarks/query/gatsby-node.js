@@ -4,7 +4,7 @@ const fs = require(`fs`)
 
 const NUM_PAGES = parseInt(process.env.NUM_PAGES || 5000, 10)
 
-const NUM_TYPES = parseInt(process.env.NUM_TYPES || 10, 10)
+const NUM_TYPES = parseInt(process.env.NUM_TYPES || 1, 10)
 
 function newTypeName() {
   return _.capitalize(_.camelCase(faker.lorem.word()))
@@ -45,28 +45,19 @@ exports.sourceNodes = ({ actions: { createNode } }) => {
 // Total hack. It would be nice if we could programmatically generate
 // graphQL per component. But in the meantime, we just generate the
 // actual component js file with the graphql
-function createPageTemplateJs(typeName) {
-  const lowerTypeName = _.lowerFirst(typeName)
+function createPageTemplateJs() {
   return `
 import React from "react"
 import { graphql } from "gatsby"
 
 export default ({ data }) => {
-  const node = data["${lowerTypeName}"]
   return (
     <div>
-      <h1>{node.id}. Not much ey</h1>
+      <h1>Not much ey</h1>
     </div>
   )
 }
 
-export const query = graphql\`
-  query($id: String!) {
-    ${lowerTypeName}(internal: { nestedId: { eq: $id } }) {
-      id
-    }
-  }
-\`
 `
 }
 
@@ -86,7 +77,7 @@ function allTypeQuery(typeName) {
 
 // Create template in .cache for the received type
 function createTemplateFile(typeName) {
-  const templateSrc = createPageTemplateJs(typeName)
+  const templateSrc = createPageTemplateJs()
   const templateFilename = `./.cache/${typeName}Template.js`
   fs.writeFileSync(templateFilename, templateSrc)
   return templateFilename
