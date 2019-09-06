@@ -6,19 +6,27 @@ Defaults to building a site with 5k pages split evenly amongst 10 types. Set the
 
 ## Activity Summary
 
-With activity updates<br>
+### With activity updates
+
 | Queries | Static HTML |
+| ------------- | ------------- |
 | 12.476 s | 4.170 s |
 | 13.538 s | 3.981 s |
 | 13.190 s | 4.802 s |
 | 12.780 s | 4.976 s |
 
-Without activity updates<br>
+![](on.gif)
+
+### Without activity updates
+
 | Queries | Static HTML |
+| ------------- | ------------- |
 | 4.181 s | 4.236 s |
 | 4.289 s | 4.518 s |
 | 4.262 s | 4.327 s |
 | 4.158 s | 4.051 s |
+
+![](off.gif)
 
 The version with activity is 1 second per 1.000 queries slower.
 
