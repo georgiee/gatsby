@@ -5,7 +5,9 @@
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build",
-    "serve": "gatsby serve"
+    "serve": "gatsby serve",
+    "run:activity-on": "rm -rf .cache && rm -rf public && NUM_PAGES=10000  gatsby build",
+    "run:activity-off": "rm -rf .cache && rm -rf public && HIDE_ACTIVITY_PROGRESS=1 NUM_PAGES=10000  gatsby build"
   },
   "dependencies": {
     "faker": "^4.1.0",

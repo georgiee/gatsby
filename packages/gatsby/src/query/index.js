@@ -11,6 +11,7 @@ const GraphQLRunner = require(`./graphql-runner`)
 let seenIdsWithoutDataDependencies = []
 let queuedDirtyActions = []
 const extractedQueryIds = new Set()
+const hideActivityProgress = !!process.env.HIDE_ACTIVITY_PROGRESS
 
 // Remove pages from seenIdsWithoutDataDependencies when they're deleted
 // so their query will be run again if they're created again.
@@ -151,11 +152,13 @@ const reportStats = (queue, activity) => {
   const startQueries = process.hrtime()
   queue.on(`task_finish`, () => {
     const stats = queue.getStats()
-    activity.setStatus(
-      `${stats.total}/${stats.peak} ${(
-        stats.total / convertHrtime(process.hrtime(startQueries)).seconds
-      ).toFixed(2)} queries/second`
-    )
+    if (!hideActivityProgress) {
+      activity.setStatus(
+        `${stats.total}/${stats.peak} ${(
+          stats.total / convertHrtime(process.hrtime(startQueries)).seconds
+        ).toFixed(2)} queries/second`
+      )
+    }
   })
 }
 

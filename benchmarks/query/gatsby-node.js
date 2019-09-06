@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const faker = require(`faker`)
 const fs = require(`fs`)
-
+console.log(process.env.NUM_PAGES)
 const NUM_PAGES = parseInt(process.env.NUM_PAGES || 5000, 10)
 
 const NUM_TYPES = parseInt(process.env.NUM_TYPES || 1, 10)

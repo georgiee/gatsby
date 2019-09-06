@@ -11,6 +11,8 @@ const telemetry = require(`gatsby-telemetry`)
 
 const handleWebpackError = require(`../utils/webpack-error-parser`)
 
+const hideActivityProgress = !!process.env.HIDE_ACTIVITY_PROGRESS
+
 const runWebpack = compilerConfig =>
   new Promise((resolve, reject) => {
     webpack(compilerConfig).run((err, stats) => {
@@ -80,7 +82,8 @@ const renderHTMLQueue = (
             })
             .then(() => {
               finished += pageSegment.length
-              if (activity) {
+
+              if (activity && !hideActivityProgress) {
                 activity.setStatus(
                   `${finished}/${pages.length} ${(
                     finished / convertHrtime(process.hrtime(start)).seconds
